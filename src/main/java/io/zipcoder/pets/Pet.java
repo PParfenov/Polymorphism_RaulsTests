@@ -13,9 +13,10 @@ public abstract class Pet implements Comparable<Pet>{
 
     @Override
     public int compareTo(Pet other){
-        return this.getName().equalsIgnoreCase(other.getName()) ?
-                this.getClass().getSimpleName().compareToIgnoreCase(other.getClass().getSimpleName()):
-                this.getName().compareToIgnoreCase(other.getName());
+        boolean ifNameEqual = this.getName().equalsIgnoreCase(other.getName());
+        int compareTypes = this.getClass().getSimpleName().compareToIgnoreCase(other.getClass().getSimpleName());
+        int compareNames = this.getName().compareToIgnoreCase(other.getName());
+        return ifNameEqual ? compareTypes : compareNames;
     }
 
     public abstract String speak();
@@ -28,7 +29,10 @@ public abstract class Pet implements Comparable<Pet>{
         this.name = name;
     }
 
-    public static Comparator<Pet> compareByType = (a, b)-> a.getClass().getSimpleName().equalsIgnoreCase(b.getClass().getSimpleName()) ?
-                                            a.getName().compareToIgnoreCase(b.getName()):
-                                            a.getClass().getSimpleName().compareToIgnoreCase(b.getClass().getSimpleName());
+    public static Comparator<Pet> compareByType = (a, b) -> {
+        boolean ifTypeEqual = a.getClass().getSimpleName().equalsIgnoreCase(b.getClass().getSimpleName());
+        int compareNames = a.getName().compareToIgnoreCase(b.getName());
+        int compareTypes = a.getClass().getSimpleName().compareToIgnoreCase(b.getClass().getSimpleName());
+        return ifTypeEqual ? compareNames : compareTypes;
+    };
 }
