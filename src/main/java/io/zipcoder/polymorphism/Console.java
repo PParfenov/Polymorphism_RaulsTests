@@ -31,16 +31,27 @@ public class Console {
         String input = "";
         for (int i = 0; i < numberOfPets; i++) {
             Pet pet;
-            do{
-                System.out.println("what kind of pet is pet#"+(i+1)+"? {Cat, Dog, or Lion?}");
-                input = scanner.nextLine();
-            }while(!"cat".equalsIgnoreCase(input) && !"dog".equalsIgnoreCase(input) && !"lion".equalsIgnoreCase(input));
+            input = getType(scanner, i);
             pet = getPetOfType(input);
             pets.add(pet);
-            System.out.println("What is this "+pet.getClass().getSimpleName()+"'s name?");
-            input = scanner.nextLine();
-            pet.setName(input);
+            getAndSetName(scanner, pet);
         }
+    }
+
+    private String getType(Scanner scanner, int i) {
+        String input;
+        do{
+            System.out.println("what kind of pet is pet#"+(i+1)+"? {Cat, Dog, or Lion?}");
+            input = scanner.nextLine();
+        }while(!"cat".equalsIgnoreCase(input) && !"dog".equalsIgnoreCase(input) && !"lion".equalsIgnoreCase(input));
+        return input;
+    }
+
+    private void getAndSetName(Scanner scanner, Pet pet) {
+        String input;
+        System.out.println("What is this "+pet.getClass().getSimpleName()+"'s name?");
+        input = scanner.nextLine();
+        pet.setName(input);
     }
 
     private Pet getPetOfType(String input) {
